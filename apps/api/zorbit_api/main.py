@@ -3,7 +3,7 @@ COLLIVRA FastAPI Application Entrypoint.
 
 Configures application lifecycle, global routers, middleware, and process-wide policies.
 """
-
+import os
 from __future__ import annotations
 
 import logging
