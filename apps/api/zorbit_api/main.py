@@ -1,12 +1,14 @@
+
 """
 COLLIVRA FastAPI Application Entrypoint.
 
 Configures application lifecycle, global routers, middleware, and process-wide policies.
 """
-import os
+
 from __future__ import annotations
 
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from astropy.utils import iers
@@ -29,13 +31,8 @@ async def lifespan(app: FastAPI):
     Application lifespan context manager for COLLIVRA API service.
 
     Enforces process-wide offline IERS policy at startup before any API requests
-    can execute orbital frame transformations:
-    - Sets iers.conf.auto_download = False and iers.conf.auto_max_age = None.
-    - Prevents unexpected live network requests, telemetry delays, or remote socket hangs.
-    - Guarantees deterministic, reproducible offline astrodynamics calculations.
-    - Eliminates thread-safety issues of runtime temporary configuration mutation.
+    can execute orbital frame transformations.
     """
-    # Intentional process-wide offline policy for COLLIVRA API service (AGENTS.md)
     logger.info("Initializing COLLIVRA API: configuring IERS offline policy")
     configure_iers()
     yield
@@ -43,6 +40,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     """Create and configure the COLLIVRA FastAPI application."""
+
     app = FastAPI(
         title="COLLIVRA Orbital Intelligence API",
         version="0.1.0",
@@ -50,19 +48,25 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    # Allowed frontend origins
     origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://collivra-one.vercel.app",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://collivra-one.vercel.app",
     ]
-    
+
+    # Support additional comma-separated frontend origins from Render
     extra_origins = os.getenv("FRONTEND_ORIGINS", "")
+
     origins.extend(
         origin.strip().rstrip("/")
         for origin in extra_origins.split(",")
         if origin.strip()
     )
-    
+
+    # Remove duplicate origins while preserving order
+    origins = list(dict.fromkeys(origins))
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
@@ -73,10 +77,12 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(EarthOrientationPolicyError)
     async def earth_orientation_policy_exception_handler(
-        request: Request, exc: EarthOrientationPolicyError
+        request: Request,
+        exc: EarthOrientationPolicyError,
     ) -> JSONResponse:
-        """Map domain EarthOrientationPolicyError to structured HTTP 422 Unprocessable Content."""
+        """Map EarthOrientationPolicyError to structured HTTP 422."""
         logger.warning("Earth orientation policy violation: %s", exc)
+
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content={
@@ -90,6 +96,7 @@ def create_app() -> FastAPI:
 
     @app.get("/health")
     async def health_check():
+        """Return backend health and IERS operating mode."""
         return {
             "status": "healthy",
             "service": "zorbit_api",
@@ -98,6 +105,7 @@ def create_app() -> FastAPI:
             "iers_mode": get_iers_mode(),
         }
 
+    # Register API routers
     app.include_router(conjunctions_router)
     app.include_router(risk_router)
     app.include_router(remediation_router)
