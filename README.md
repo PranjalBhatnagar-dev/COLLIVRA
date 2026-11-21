@@ -11,7 +11,7 @@ Developed by **Team Errorists** for **ASTRA 2026 — VIT Bhopal**.
 ## 1. Problem Statement
 
 Low Earth Orbit (LEO) is experiencing exponential asset growth from mega-constellations and commercial satellites alongside tens of thousands of unmaneuverable debris fragments. This crowded orbital environment poses critical challenges:
-- **Orbital Congestion & Cascading Collision Risks:** High relative closing velocities (~10 to 15 km/s) mean even millimeter-sized debris can inflict catastrophic kinetic impacts, risking runaway Kessler syndrome cascades.
+- **Orbital Congestion and Cascading Collision Risks:** High relative closing velocities (~10 to 15 km/s) mean even millimeter-sized debris can inflict catastrophic kinetic impacts, risking runaway Kessler syndrome cascades.
 - **Data Fidelity vs. Analytical Misrepresentation:** Public orbital ephemerides (TLE/OMM) do not provide calibrated positional error covariance matrices ($\mathbf{C}_1, \mathbf{C}_2$). Presenting heuristic risk indices as formal collision probabilities ($P_c$) misinforms operators and erodes trust in safety analyses.
 - **Operational Fragmentation:** Satellite operators and space sustainability teams often contend with disjointed tools for orbital tracking, conjunction screening, debris modeling, and remediation planning.
 - **Reference Frame Ambiguities:** Inconsistent handling of celestial and terrestrial reference systems (e.g., confusing SGP4's native TEME frame with inertial GCRS or rotating frames) induces severe geometrical errors.
