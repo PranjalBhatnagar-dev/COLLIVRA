@@ -283,7 +283,7 @@ To maintain scientific integrity (AGENTS.md §3), COLLIVRA enforces strict trans
 - **Mahi Gupta** — Frontend Architecture, Next.js 14 Application Shell, 3D Inertial GCRS Radar Canvas, Celestial Shaders & Responsive Mission Control UI
 - **Aarushi Raizada** — Simulation & Remediation Lead, Synthetic Breakup Modeling, Momentum Conservation, Cowell DOP853 Propagation & Clohessy-Wiltshire Relative Motion Solver
 
----
+----
 
 ## 13. License
 
