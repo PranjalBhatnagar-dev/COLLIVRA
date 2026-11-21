@@ -281,5 +281,5 @@ def test_end_to_end_rejection_unphysical_chaser(circular_collision_scenario):
             chaser_id="CHASER-ECCENTRIC",
             chaser_epoch_utc=epoch,
             chaser_gcrs_position_km=[7200.0, 0.0, 0.0],
-            chaser_gcrs_velocity_kms=[0.0, 8.5, 0.0],  # Hyperbolic or high eccentricity
+            chaser_gcrs_velocity_kms=[0.0, 8.5, 0.0],  # Hyperbolic or high eccentricity   
         )
