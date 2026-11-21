@@ -327,4 +327,4 @@ class TestDeduplication:
         deduped = deduplicate_records([rec_old, rec_new])
         assert len(deduped) == 1
         assert deduped[0].epoch == datetime(2026, 11, 1, 20, 0, 0, tzinfo=timezone.utc)
-        assert deduped[0].rev_at_epoch == 99999
+        assert deduped[0].rev_at_epoch == 99999  
