@@ -7,15 +7,16 @@ Configures application lifecycle, global routers, middleware, and process-wide p
 from __future__ import annotations
 
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from astropy.utils import iers
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
 from orbital_core.exceptions import EarthOrientationPolicyError
 from orbital_core.iers_policy import configure_iers, get_iers_mode
+
 from zorbit_api.routers.conjunctions import router as conjunctions_router
 from zorbit_api.routers.remediation import router as remediation_router
 from zorbit_api.routers.risk import router as risk_router
@@ -51,9 +52,17 @@ def create_app() -> FastAPI:
     )
 
     origins = [
+        "https://collivra-one.vercel.app",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
     ]
+
+    frontend_origins_env = os.environ.get("FRONTEND_ORIGINS", "").strip()
+    if frontend_origins_env:
+        for raw_origin in frontend_origins_env.split(","):
+            cleaned = raw_origin.strip()
+            if cleaned and cleaned not in origins:
+                origins.append(cleaned)
 
     app.add_middleware(
         CORSMiddleware,
