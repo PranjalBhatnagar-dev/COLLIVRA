@@ -280,8 +280,8 @@ To maintain scientific integrity (AGENTS.md §3), COLLIVRA enforces strict trans
 **Team Errorists — ASTRA 2026, VIT Bhopal**
 
 - **Pranjal Bhatnagar** — Backend Architecture, Orbital Mechanics, Coordinate Frames (`frames.py`, `iers_policy.py`), Conjunction Screening Engine & API Integration
-- **Mahi Gupta** — Frontend Architecture, Next.js 14 Application Shell, 3D Inertial GCRS Radar Canvas, Celestial Shaders & Responsive Mission Control UI
-- **Aarushi Raizada** — Simulation & Remediation Lead, Synthetic Breakup Modeling, Momentum Conservation, Cowell DOP853 Propagation & Clohessy-Wiltshire Relative Motion Solver
+- **Mahi Gupta**        — Frontend Architecture, Next.js 14 Application Shell, 3D Inertial GCRS Radar Canvas, Celestial Shaders & Responsive Mission Control UI
+- **Aarushi Raizada**   — Simulation & Remediation Lead, Synthetic Breakup Modeling, Momentum Conservation, Cowell DOP853 Propagation & Clohessy-Wiltshire Relative Motion Solver
 
 ----
 
