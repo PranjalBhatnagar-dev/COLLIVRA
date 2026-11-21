@@ -51,10 +51,18 @@ def create_app() -> FastAPI:
     )
 
     origins = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://collivra-one.vercel.app",
     ]
-
+    
+    extra_origins = os.getenv("FRONTEND_ORIGINS", "")
+    origins.extend(
+        origin.strip().rstrip("/")
+        for origin in extra_origins.split(",")
+        if origin.strip()
+    )
+    
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
